@@ -1,0 +1,23 @@
+name: scenescript
+channels:
+  - nvidia/label/cuda-12.1.0
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - numpy=1.24.2
+  - jupyter
+  - plotly
+  - pandas
+  - cuda
+  - pytorch==2.4.0
+  - pytorch-cuda=12.1
+  - sparsehash
+  - pip
+  - pip:
+    - scipy
+    - projectaria-tools
+    - einops
+    - omegaconf
+    - git+https://github.com/mit-han-lab/torchsparse.git
