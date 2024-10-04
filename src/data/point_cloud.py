@@ -33,7 +33,6 @@ class PointCloud:
             inverse_distance_std_threshold: float. Threshold on the standard deviation of the inverse depth.
         """
         try:
-
             import projectaria_tools.core.mps as mps
             from projectaria_tools.core.mps.utils import filter_points_from_confidence
 

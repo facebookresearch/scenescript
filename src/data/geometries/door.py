@@ -12,7 +12,6 @@ from .base_entity import BaseEntity
 
 
 class DoorEntity(BaseEntity):
-
     COMMAND_STRING = "make_door"
 
     PARAMS_DEFINITION = {

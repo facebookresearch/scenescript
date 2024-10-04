@@ -12,7 +12,6 @@ from .base_entity import BaseEntity
 
 
 class WallEntity(BaseEntity):
-
     COMMAND_STRING = "make_wall"
 
     PARAMS_DEFINITION = {

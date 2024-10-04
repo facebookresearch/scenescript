@@ -12,7 +12,6 @@ from .base_entity import BaseEntity
 
 
 class BboxEntity(BaseEntity):
-
     COMMAND_STRING = "make_bbox"
 
     PARAMS_DEFINITION = {

@@ -37,9 +37,7 @@ def list_rindex(list, value):
 
 
 class SceneScriptWrapper(object):
-
     def __init__(self, cfg):
-
         self.cfg = cfg
         self.max_num_tokens = cfg.model.decoder.max_num_tokens
         self.type_token = create_TYPE_TOKEN()
@@ -65,7 +63,6 @@ class SceneScriptWrapper(object):
 
     @staticmethod
     def load_from_checkpoint(ckpt_path):
-
         ckpt_dict = torch.load(ckpt_path)
         cfg = OmegaConf.create(ckpt_dict["cfg"])
 
@@ -125,7 +122,6 @@ class SceneScriptWrapper(object):
             seq_type_b = seq_type[b]  # [t - 1]
 
             try:
-
                 # There's already a stop token
                 if torch.any(seq_type_b == self.type_token.STOP):
                     new_type[b] = self.type_token.PAD
@@ -144,7 +140,6 @@ class SceneScriptWrapper(object):
 
                 # We are somewhere in the middle of an argument sequence
                 else:
-
                     latest_command_token_idx = list_rindex(
                         seq_type_b.tolist(), self.type_token.COMMAND
                     )
@@ -153,13 +148,16 @@ class SceneScriptWrapper(object):
                     )
                     ENTITY_CLASS = get_entity_class_from_token(command_value)
 
-                    type_token_ordering = [self.type_token.COMMAND] + [
-                        self.type_token[
-                            f"{ENTITY_CLASS.COMMAND_STRING}_{param_key}".upper()
+                    type_token_ordering = (
+                        [self.type_token.COMMAND]
+                        + [
+                            self.type_token[
+                                f"{ENTITY_CLASS.COMMAND_STRING}_{param_key}".upper()
+                            ]
+                            for param_key in ENTITY_CLASS.PARAMS_DEFINITION
+                            if not is_id_param(param_key)
                         ]
-                        for param_key in ENTITY_CLASS.PARAMS_DEFINITION
-                        if not is_id_param(param_key)
-                    ]  # e.g. [COMMAND, MAKE_WALL_A_X, MAKE_WALL_A_Y, ..., MAKE_WALL_HEIGHT]
+                    )  # e.g. [COMMAND, MAKE_WALL_A_X, MAKE_WALL_A_Y, ..., MAKE_WALL_HEIGHT]
 
                     token_order_idx = type_token_ordering.index(seq_type_b[-1])
                     new_type[b] = type_token_ordering[token_order_idx + 1]
@@ -257,7 +255,6 @@ class SceneScriptWrapper(object):
         )
 
         for _ in range(seq_value.shape[1], self.max_num_tokens):
-
             # Run decoder to get logits
             logits = self.model["decoder"](
                 context=context,

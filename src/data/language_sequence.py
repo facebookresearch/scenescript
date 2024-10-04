@@ -41,9 +41,7 @@ def point_to_line_seg_dist(point, line_seg):
     # compute the perpendicular distance to the theoretical infinite line_seg
     segment_dist = np.linalg.norm(
         np.cross(line_seg[1] - line_seg[0], line_seg[0] - point)
-    ) / np.linalg.norm(
-        unit_line_seg
-    )  # scalar
+    ) / np.linalg.norm(unit_line_seg)  # scalar
 
     # Project point to line
     diff = norm_unit_line_seg.dot(point - line_seg[0])
@@ -70,7 +68,6 @@ def point_to_line_seg_dist(point, line_seg):
 
 
 class LanguageSequence:
-
     def __init__(self, entities):
         """
         Args:
@@ -198,12 +195,10 @@ class LanguageSequence:
         """
         for entity in self.entities:
             for key in entity.PARAMS_DEFINITION:
-
                 normalization_strategy = entity.PARAMS_DEFINITION[key]["normalise"]
                 dtype = entity.PARAMS_DEFINITION[key]["dtype"]
 
                 if dtype == float:
-
                     min_val, max_val = normalization_values[normalization_strategy]
                     normalized_value = (entity.params[key] - min_val) / (
                         max_val - min_val
@@ -234,7 +229,6 @@ class LanguageSequence:
         """
         for entity in self.entities:
             for key in entity.params:
-
                 normalization_strategy = entity.PARAMS_DEFINITION[key]["normalise"]
                 dtype = entity.PARAMS_DEFINITION[key]["dtype"]
 
@@ -262,7 +256,6 @@ class LanguageSequence:
         """
         sorted_entities = []
         for ENTITY_CLASS in ALL_ENTITY_CLASSES:
-
             sort_keys = []
             entities_to_sort = []
 
@@ -349,7 +342,6 @@ class LanguageSequence:
 
         entities = []
         for part_idx in range(part_idxs.shape[0] - 1):
-
             element_subseq = (
                 seq[part_idxs[part_idx] + 1 : part_idxs[part_idx + 1]]
                 - HELPER_TOKEN.NUM
@@ -369,7 +361,6 @@ class LanguageSequence:
 
             params_subseq_idx = 0
             for param_key in ENTITY_CLASS.PARAMS_DEFINITION:
-
                 if is_id_param(param_key):  # special case
                     if param_key == "id":
                         params[param_key] = ids_dict[command_str]

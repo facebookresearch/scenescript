@@ -10,7 +10,6 @@ import numpy as np
 
 
 class BaseEntity(ABC):
-
     @property
     @abstractmethod
     def COMMAND_STRING(self):

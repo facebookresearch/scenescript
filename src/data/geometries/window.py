@@ -8,7 +8,6 @@ from .door import DoorEntity
 
 
 class WindowEntity(DoorEntity):
-
     COMMAND_STRING = "make_window"
 
     TOKEN = 3
